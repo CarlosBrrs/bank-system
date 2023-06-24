@@ -1,0 +1,1 @@
+INSERT INTO product (code, name) VALUES('001', 'Debit card'), ('002', 'Credit card'), ('003', 'Savings account');
