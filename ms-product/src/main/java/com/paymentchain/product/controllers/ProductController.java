@@ -3,6 +3,8 @@ package com.paymentchain.product.controllers;
 import com.paymentchain.product.entities.Product;
 import com.paymentchain.product.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,9 +26,14 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductService productService;
+    @Autowired
+    private final WebClient.Builder loadBalancedWebClientBuilder;
+    @Value("${user.alias}")
+    private String alias;
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
+        System.out.println(alias);
         return ResponseEntity.ok(productService.getAllProducts());
     }
 

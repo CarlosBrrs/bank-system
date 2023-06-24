@@ -6,3 +6,56 @@ springdoc:
 # Server port
 server:
   port: 8081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://127.0.0.1:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+# h2 db config
+spring:
+  application:
+    name: businessdomain-customer
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      failFast: true
+      name: config-client
+      profile: development
+      username: admin
+      password: admin
+      retry:
+        max-attempts: 1
+        max-interval: 1000
+  datasource:
+    url: jdbc:h2:mem:customer-ms-db
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        hbm2ddl.auto: update
+  h2:
+    console:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+    env:
+      show-values: ALWAYS

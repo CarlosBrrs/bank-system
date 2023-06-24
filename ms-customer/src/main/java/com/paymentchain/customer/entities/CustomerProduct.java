@@ -18,14 +18,14 @@ import java.util.UUID;
 public class CustomerProduct {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private long productId;
     @Transient
     private String productName;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
-    @JoinColumn(name = "customerId", nullable = true)
+    @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
 }
