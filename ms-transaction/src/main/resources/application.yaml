@@ -1,0 +1,55 @@
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /ms-transaction-swagger.html
+
+# Server port
+server:
+  port: 8083
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://127.0.0.1:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+# h2 db config
+spring:
+  application:
+    name: businessdomain-transaction
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      failFast: true
+      name: config-client
+      profile: development
+      username: admin
+      password: admin
+      retry:
+        max-attempts: 1
+        max-interval: 1000
+  datasource:
+    url: jdbc:h2:mem:transaction-ms-db
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    env:
+      show-values: ALWAYS
