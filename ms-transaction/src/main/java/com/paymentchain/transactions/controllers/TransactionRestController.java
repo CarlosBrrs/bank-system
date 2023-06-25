@@ -38,13 +38,12 @@ public class TransactionRestController {
     private final TransactionService transactionService;
     @Autowired
     private final WebClient.Builder loadBalancedWebClientBuilder;
-    @Value("${user.alias}")
-    private String alias;
 
     @GetMapping()
     public ResponseEntity<List<Transaction>> getAllTransactions() {
-        System.out.println(alias);
-        return ResponseEntity.ok(transactionService.findAllTransactions());
+        List<Transaction> allTransactions = transactionService.findAllTransactions();
+        return (allTransactions == null || allTransactions.isEmpty()) ?
+                ResponseEntity.noContent().build() : ResponseEntity.ok(allTransactions);
     }
     
     @GetMapping("/{id}")

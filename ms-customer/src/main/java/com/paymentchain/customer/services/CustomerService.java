@@ -18,7 +18,7 @@ public interface CustomerService {
 
     void deleteCustomer(String uuid);
 
-    Customer findCustomerByCode(String code);
+    Optional<Customer> findCustomerByCode(String code);
 
-    Customer findCustomerByIban(String iban);
+    Optional<Customer> findCustomerByIban(String iban);
 }

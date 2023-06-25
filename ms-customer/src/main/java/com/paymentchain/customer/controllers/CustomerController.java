@@ -10,7 +10,6 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -32,6 +31,7 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -83,7 +83,9 @@ public class CustomerController {
 
     @GetMapping("/full")
     public ResponseEntity<Customer> getCustomerByCode(@RequestParam String code) {
-        Customer customerByCode = customerService.findCustomerByCode(code);
+        Optional<Customer> customerByCodeOptional = customerService.findCustomerByCode(code);
+        if (customerByCodeOptional.isEmpty()) return ResponseEntity.notFound().build();
+        Customer customerByCode = customerByCodeOptional.get();
         List<CustomerProduct> productList = customerByCode.getProductList();
         productList.forEach(product -> {
             String productName = getProductNameFromProductMs(product.getProductId());

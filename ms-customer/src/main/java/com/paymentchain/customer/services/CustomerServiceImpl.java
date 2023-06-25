@@ -51,11 +51,11 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customerOptional = customerRepository.findById(UUID.fromString(uuid));
         customerOptional.ifPresent(customerRepository::delete);
     }
-    public Customer findCustomerByCode(String code) {
-        return customerRepository.findByCode(code).orElseThrow();
+    public Optional<Customer> findCustomerByCode(String code) {
+        return customerRepository.findByCode(code);
     }
 
-    public Customer findCustomerByIban(String iban) {
-        return customerRepository.findByIban(iban).orElseThrow();
+    public Optional<Customer> findCustomerByIban(String iban) {
+        return customerRepository.findByIban(iban);
     }
 }
