@@ -3,11 +3,11 @@ package com.paymentchain.product.services;
 import com.paymentchain.product.entities.Product;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public interface ProductService {
 
-    Product getProduct(long id);
+    Optional<Product> getProduct(long id);
 
 
     List<Product> getAllProducts();
