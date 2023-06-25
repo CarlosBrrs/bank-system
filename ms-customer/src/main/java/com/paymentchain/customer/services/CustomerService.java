@@ -3,13 +3,13 @@ package com.paymentchain.customer.services;
 import com.paymentchain.customer.entities.Customer;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public interface CustomerService {
 
     Customer editCustomer(String uuid, Customer customer);
 
-    Customer getCustomer(String uuid);
+    Optional<Customer> getCustomer(String uuid);
 
 
     List<Customer> getAllCustomers();

@@ -32,8 +32,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(String uuid) {
-        return customerRepository.findById(UUID.fromString(uuid)).orElseThrow();
+    public Optional<Customer> getCustomer(String uuid) {
+        return customerRepository.findById(UUID.fromString(uuid));
     }
 
     @Override

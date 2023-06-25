@@ -42,8 +42,6 @@ public class CustomerController {
     private final CustomerService customerService;
     @Autowired
     private final WebClient.Builder loadBalancedWebClientBuilder;
-    @Value("${user.alias}")
-    private String alias;
 
     HttpClient httpClient = HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
@@ -57,13 +55,14 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
-        System.out.println(alias);
-        return ResponseEntity.ok(customerService.getAllCustomers());
+        List<Customer> allCustomers = customerService.getAllCustomers();
+        return (allCustomers == null || allCustomers.isEmpty()) ?
+                ResponseEntity.noContent().build() : ResponseEntity.ok(allCustomers);
     }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<Customer> getCustomer(@PathVariable String uuid) {
-        return ResponseEntity.ok((customerService.getCustomer(uuid)));
+        return customerService.getCustomer(uuid).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
